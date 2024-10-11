@@ -2,6 +2,8 @@
 
 **Dragon Repeller** is a text-based RPG game developed using HTML, CSS, and JavaScript. As the player, you must defeat a series of monsters to save the town from the dreaded dragon that prevents the townspeople from leaving. This project is inspired by a FreeCodeCamp exercise and is a fun example of creating interactive web games.
 
+All credits to freeCodeCamp.org who guided me step by step in their youtube video "Full Stack Web Development for Beginners (Full Course on HTML, CSS, JavaScript, Node.js, MongoDB) [https://www.youtube.com/watch?v=nu_pCVPKzTk&list=PLWKjhJtqVAbn21gs5UnLhCQ82f923WCgM&index=15]"
+
 ## Table of Contents
 - [Features](#features)
 - [Gameplay Overview](#gameplay-overview)
