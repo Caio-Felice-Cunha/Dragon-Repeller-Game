@@ -1,8 +1,11 @@
+![Epic Boy vs Dragon Fantasy Digital Art Poster](https://github.com/user-attachments/assets/1f92b9d2-125d-45b6-a3c9-135a781f4e25)
+
 # RPG - Dragon Repeller
 
 **Dragon Repeller** is a text-based RPG game developed using HTML, CSS, and JavaScript. As the player, you must defeat a series of monsters to save the town from the dreaded dragon that prevents the townspeople from leaving. This project is inspired by a FreeCodeCamp exercise and is a fun example of creating interactive web games.
 
 A big thanks to [freeCodeCamp.org](https://www.freecodecamp.org/) for their fantastic guidance through the step-by-step YouTube course, "[Full Stack Web Development for Beginners (Full Course on HTML, CSS, JavaScript, Node.js, MongoDB)](https://www.youtube.com/watch?v=nu_pCVPKzTk&list=PLWKjhJtqVAbn21gs5UnLhCQ82f923WCgM&index=15)." Their resources made this project possible!
+
 
 ## Table of Contents
 - [Features](#features)
