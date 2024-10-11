@@ -1,11 +1,13 @@
+// Initial player stats and inventory
 let xp = 0;
 let health = 100;
 let gold = 50;
 let currentWeapon = 0;
-let fighting;
+let fighting; // index for the monster being fought
 let monsterHealth;
 let inventory = ["stick"];
 
+// HTML element references for interactive buttons and text
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
@@ -16,45 +18,23 @@ const goldText = document.querySelector("#goldText");
 const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
+
+// Weapons array with different weapon options and their power levels
 const weapons = [
-  {
-    name: "stick",
-    power: 5
-  },
-  {
-    name: "dagger",
-    power: 30
-  },
-  {
-    name: "claw hammer",
-    power: 50
-  },
-  {
-    name: "sword",
-    power: 100
-  }
+  { name: "stick", power: 5 },
+  { name: "dagger", power: 30 },
+  { name: "claw hammer", power: 50 },
+  { name: "sword", power: 100 }
 ];
 
+// Monster array with different monsters, their levels, and health points
 const monsters = [
-  {
-    name: "slime",
-    level: 2,
-    health: 15
-  },
-  {
-    name: "fanged beast",
-    level: 8,
-    health: 60
-  },
-  {
-    name: "dragon",
-    level: 20,
-    health: 300
-  }
+  { name: "slime", level: 2, health: 15 },
+  { name: "fanged beast", level: 8, health: 60 },
+  { name: "dragon", level: 20, health: 300 }
 ];
 
-
-
+// Locations array for each game state, with associated button texts, actions, and descriptions
 const locations = [
   {
     name: "town square",
@@ -78,12 +58,12 @@ const locations = [
     name: "fight",
     "button text": ["attack", "dodge", "run"],
     "button functions": [attack, dodge, goTown],
-    text: "You are fighting a monster."  
+    text: "You are fighting a monster."
   },
   {
     name: "kill monster",
     "button text": ["Go to town square"," Go to town square","Go to town square"],
-    "button functions": [goTown,goTown,easterEgg],
+    "button functions": [goTown, goTown, easterEgg],
     text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
   },
   {
@@ -106,14 +86,16 @@ const locations = [
   }
 ]
 
-// initialize buttons
+// Initialize buttons to start in the town square
 button1.onclick = goStore;
 button2.onclick = goCave;
 button3.onclick = fightDragon;
 
+// Function to update the game state based on the chosen location
 function update(location){
-  monsterStats.style.display = "none";
+  monsterStats.style.display = "none"; // Hide monster stats when changing locations
 
+  // Update button texts and functions according to the new location
   button1.innerText = location["button text"][0];
   button2.innerText = location["button text"][1];
   button3.innerText = location["button text"][2];
@@ -122,21 +104,21 @@ function update(location){
   button2.onclick = location["button functions"][1];
   button3.onclick = location["button functions"][2];
 
-  text.innerText = location.text;
+  text.innerText = location.text; // Update the location description
 }
 
+// Functions to handle location changes
 function goTown(){
     update(locations[0]);
-  }
-
+}
 function goStore() {
   update(locations[1]);
 }
-
 function goCave() {
   update(locations[2]); 
 }
 
+// Function to buy health if the player has enough gold
 function buyHealth(){
   if(gold >= 10){
     gold -=10;
@@ -148,14 +130,15 @@ function buyHealth(){
   }
 }
 
+// Function to buy a new weapon, with checks for gold and max weapon level
 function buyWeapon(){
-  if (currentWeapon < weapons.length -1) {
+  if (currentWeapon < weapons.length - 1) {
     if (gold >= 30) {
       gold -=30;
       currentWeapon ++;
       goldText.innerText = gold;
       let newWeapon = weapons[currentWeapon].name;
-        text.innerText = "You now have a " + newWeapon + ".";
+      text.innerText = "You now have a " + newWeapon + ".";
       inventory.push(newWeapon);
       text.innerText += " In your inventory you have: " + inventory;
     } else {
@@ -168,33 +151,34 @@ function buyWeapon(){
   }
 }
 
+// Function to sell a weapon if the player has more than one
 function sellWeapon(){
   if (inventory.length > 1){
     gold += 15;
     goldText.innerText = gold;
     let currentWeapon = inventory.shift();
     text.innerText = "You sold a " + currentWeapon + ".";
-    text.innerText += "In your inventory you have: " + inventory;
+    text.innerText += " In your inventory you have: " + inventory;
   } else {
     text.innerText = "Don't sell your only weapon!";
   }
 }
 
+// Functions to initiate fights with different monsters
 function fightSlime(){
   fighting = 0;
   goFight();
 }
-
 function fightBeast(){
   fighting = 1;
   goFight();
 }
-
 function fightDragon() {
   fighting = 2;
   goFight();
 }
 
+// Function to initiate a fight by setting up monster stats and displaying them
 function goFight(){
   update(locations[3]);
   monsterHealth = monsters[fighting].health;
@@ -203,6 +187,7 @@ function goFight(){
   monsterHealthText.innerText = monsterHealth;
 }
 
+// Function to handle an attack sequence, including health updates and possible win/lose conditions
 function attack(){
   text.innerText = "The " + monsters[fighting].name + " attacks.";
   text.innerText += " You attacked it with your " + weapons[currentWeapon].name + ".";
@@ -221,27 +206,31 @@ function attack(){
     fighting === 2 ? winGame() : defeatMonster();
   }
 
+  // Check if a weapon breaks with a random chance during attack
   if (Math.random() <= .1 && inventory.length !== 1){
     text.innerText += " Your " + inventory.pop() + " breaks.";
-    currentWeapon-- ;
-
+    currentWeapon--;
   }
 }
 
+// Helper function to calculate monster attack value based on its level and player XP
 function getMonsterAttackValue(level){
   let hit = (level * 5) - (Math.floor(Math.random() * xp));
   console.log(hit);
   return hit;
 }
 
+// Function to determine if a monster successfully hits the player
 function isMonsterHit(){
   return Math.random() > .2 || health < 20;
 }
 
+// Function to handle a dodge action, preventing damage
 function dodge(){
   text.innerText = "You dodge the attack from the " + monsters[fighting].name + ".";
 }
 
+// Function to handle defeating a monster, adding gold and XP to player stats
 function defeatMonster(){
   gold += Math.floor(monsters[fighting].level * 6.7);
   xp += monsters[fighting].level;
@@ -250,14 +239,17 @@ function defeatMonster(){
   update(locations[4]);
 }
 
+// Function to handle the player's death and loss condition
 function lose(){
   update(locations[5]);
 }
 
+// Function to handle winning the game after defeating the dragon
 function winGame(){
   update(locations[6]);
 }
 
+// Function to restart the game by resetting player stats and returning to town square
 function restart() {
   xp = 0;
   health = 100;
@@ -270,18 +262,20 @@ function restart() {
   goTown();
 }
 
+// Function to access the easter egg game
 function easterEgg() {
   update(locations[7]);
 }
 
+// Functions to make specific guesses in the easter egg game
 function pickTwo(){
   pick(2);
 }
-
 function pickEight(){
   pick(8);
 }
 
+// Function for easter egg guessing game, awarding gold or deducting health based on random selection
 function pick(guess) {
   let numbers = [];
   while (numbers.length < 10) {
@@ -292,16 +286,16 @@ function pick(guess) {
 
   for (let i = 0; i < 10; i ++) {
     text.innerText += numbers[i] + "\n";
-
-  } if (numbers.indexOf(guess) !== -1){
-    text.innerText += "Right! You win 20 gold!"
+  } 
+  if (numbers.indexOf(guess) !== -1){
+    text.innerText += "Right! You win 20 gold!";
     gold += 20;
     goldText.innerText = gold;
   } else {
     text.innerText += "Wrong! You lose 10 health!";
     health -= 10;
     healthText.innerText = health;
-    if (health <=0){
+    if (health <= 0){
       lose();
     }
   }
