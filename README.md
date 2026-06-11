@@ -39,42 +39,55 @@ Your goal is to defeat the dragon to win the game. Along the way, you’ll encou
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/rpg-dragon-repeller.git
+   git clone https://github.com/Caio-Felice-Cunha/Dragon-Repeller-Game.git
    ```
-   
+
 2. **Navigate into the project directory**:
    ```bash
-   cd rpg-dragon-repeller
+   cd Dragon-Repeller-Game
    ```
 
-3. **Open the project in your preferred code editor.**
-
-4. **Launch the game**:
-   - Open `index.html` in your web browser to start playing.
+3. **Launch the game**:
+   - Open `index.html` directly in your web browser. There is no build step and no dependencies.
+   - Optionally, serve the folder with any static server, for example `python -m http.server` and then open `http://localhost:8000`.
 
 ## Usage
 
 ### Controls
-- **Buttons**: Use the buttons to navigate through the game. 
-  - Button 1: Used for purchasing items or fighting monsters.
-  - Button 2: Allows navigation between locations and other game actions.
-  - Button 3: Engage in combat or go back to the main area.
-  
+- **Three buttons**: The game is driven entirely by three buttons. They do not have fixed roles. Each location reassigns all three, and the button's current action is always shown on its label.
+  - In the **town square** the buttons are: Go to Store, Go to Cave, Fight Dragon.
+  - In the **store** they become: Buy 10 health, Buy weapon, Go to town square.
+  - During a **fight** they become: attack, dodge, run.
+  - Always read the label to know what a button does in the current location.
+
 ### Game Mechanics
 - **Upgrading Weapons**: Purchase weapons with gold to increase attack power. Weapons can break occasionally, adding an element of strategy.
 - **Fighting Monsters**: Battle progressively difficult monsters and try to survive until the final battle with the dragon.
 - **Easter Egg**: Discover a hidden game within the game for additional rewards.
+
+## Running the Tests
+
+The combat logic has a small test suite that runs in Node (version 18 or newer) with no external dependencies. It loads the real `script.js` against a minimal DOM stub and checks the core behavior, including the monster-attack clamp that stops a high-XP player from being healed on a hit.
+
+```bash
+npm test
+# or, without npm:
+node test/game.test.js
+```
 
 ## Project Structure
 
 Here is an overview of the main files:
 
 ```plaintext
-rpg-dragon-repeller/
+Dragon-Repeller-Game/
 │
 ├── index.html        # The main HTML file containing the game layout.
 ├── style.css         # CSS file for styling the game elements.
-└── script.js         # JavaScript file that controls the game logic.
+├── script.js         # JavaScript file that controls the game logic.
+├── package.json      # Test script entry point (no runtime dependencies).
+└── test/
+    └── game.test.js  # Node test suite for the core combat logic.
 ```
 
 ### `index.html`
