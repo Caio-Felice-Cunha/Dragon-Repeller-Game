@@ -62,7 +62,7 @@ const locations = [
   },
   {
     name: "kill monster",
-    "button text": ["Go to town square"," Go to town square","Go to town square"],
+    "button text": ["Go to town square","Go to town square","Go to town square"],
     "button functions": [goTown, goTown, easterEgg],
     text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
   },
@@ -194,12 +194,13 @@ function attack(){
   if (isMonsterHit()){
     health -= getMonsterAttackValue(monsters[fighting].level);
   } else {
-    text.innerText += " You miss.";
+    text.innerText += " The " + monsters[fighting].name + " misses.";
   }
-  
+
   monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
-  healthText.innerText = health;
-  monsterHealthText.innerText = monsterHealth;
+  // Clamp displayed values at 0 so the stats bar never shows negative numbers.
+  healthText.innerText = Math.max(0, health);
+  monsterHealthText.innerText = Math.max(0, monsterHealth);
   if(health <= 0){
     lose();
   } else if(monsterHealth <= 0){
@@ -216,8 +217,8 @@ function attack(){
 // Helper function to calculate monster attack value based on its level and player XP
 function getMonsterAttackValue(level){
   let hit = (level * 5) - (Math.floor(Math.random() * xp));
-  console.log(hit);
-  return hit;
+  // Clamp to non-negative so a high-XP player is never healed by a "hit".
+  return hit > 0 ? hit : 0;
 }
 
 // Function to determine if a monster successfully hits the player
@@ -294,7 +295,7 @@ function pick(guess) {
   } else {
     text.innerText += "Wrong! You lose 10 health!";
     health -= 10;
-    healthText.innerText = health;
+    healthText.innerText = Math.max(0, health);
     if (health <= 0){
       lose();
     }
