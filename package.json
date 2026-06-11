@@ -1,0 +1,14 @@
+{
+  "name": "dragon-repeller-game",
+  "version": "1.0.0",
+  "description": "Text-based RPG built with HTML, CSS, and vanilla JavaScript.",
+  "scripts": {
+    "test": "node test/game.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Caio-Felice-Cunha/Dragon-Repeller-Game.git"
+  },
+  "license": "MIT",
+  "private": true
+}

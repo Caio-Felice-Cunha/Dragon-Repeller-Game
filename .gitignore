@@ -1,0 +1,13 @@
+# Dependencies (only present if you run the test suite via npm)
+node_modules/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
